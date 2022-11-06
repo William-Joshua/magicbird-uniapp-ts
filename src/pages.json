@@ -1,0 +1,218 @@
+{
+  "easycom": {
+    "autoscan": true,
+    "custom": {
+      // uni-ui 规则如下配置
+      "^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue",
+      "^U(.*)": "@/components/UnoUI/U$1/U$1.vue"
+    }
+  },
+  "pages": [ // pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+    {
+      "path": "pages/index/index",
+      "style": {
+        "navigationBarTitleText": "首页"
+      },
+      "meta": {
+        "ignoreAuth": true
+      }
+    },
+    {
+      "path": "pages/demo/index",
+      "style": {
+        "navigationBarTitleText": "Demo"
+      },
+      "meta": {
+        "ignoreAuth": true
+      }
+    },
+    {
+      "path": "pages/about/index",
+      "style": {
+        "navigationBarTitleText": "关于"
+      },
+      "meta": {
+        "ignoreAuth": true
+      }
+    },
+    {
+      "path": "pages/login/index",
+      "style": {
+        "navigationBarTitleText": "登录"
+      },
+      "meta": {
+        "ignoreAuth": true
+      }
+    },
+    {
+      "path": "pages/log/index",
+      "style": {
+        "navigationBarTitleText": "日志"
+      }
+    },
+    {
+      "path": "pages/notFound/404",
+      "style": {
+        "navigationBarTitleText": "Not Found"
+      },
+      "meta": {
+        "ignoreAuth": true
+      }
+    }
+  ],
+  "subPackages": [
+    {
+      "root": "pagesA",
+      "pages": [
+        {
+          "path": "list/test1/index",
+          "style": {
+            "navigationBarTitleText": "test1"
+          },
+          "meta": {
+            "ignoreAuth": true
+          }
+        },
+        {
+          "path": "list/test2/index",
+          "style": {
+            "navigationBarTitleText": "test2"
+          },
+          "meta": {
+            "ignoreAuth": true
+          }
+        }
+      ]
+    },
+    {
+      "root": "pagesB",
+      "pages": [
+        {
+          "path": "detail/index",
+          "style": {
+            "navigationBarTitleText": "Detail"
+          },
+          "meta": {
+            "ignoreAuth": true
+          }
+        }
+      ]
+    },
+    {
+      "root": "demo/example",
+      "pages": [
+        {
+          "path": "fontAwesomeIcon/index",
+          "style": {
+            "navigationBarTitleText": "FontAwesomeIcon-Demo"
+          },
+          "meta": {
+            "ignoreAuth": true
+          }
+        },
+        {
+          "path": "fontAwesomeIcon/check",
+          "style": {
+            "navigationBarTitleText": "FontAwesomeIcon-Check"
+          },
+          "meta": {
+            "ignoreAuth": true
+          }
+        }
+      ]
+    },
+    {
+      "root": "pagesC",
+      "pages": [
+        {
+          "path": "index/index",
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "uni-app"
+          },
+          "meta": {
+            "ignoreAuth": true
+          }
+        },
+        {
+          "path": "collection/index",
+          "style": {
+            "navigationStyle": "custom",
+            "disableScroll": true
+          },
+          "meta": {
+            "ignoreAuth": true
+          }
+        },
+        {
+          "path": "user/index",
+          "style": {
+            "enablePullDownRefresh": true,
+            "navigationStyle": "custom"
+          },
+          "meta": {
+            "ignoreAuth": true
+          }
+        }
+      ]
+    },
+    {
+      "root": "pagesUno",
+      "pages": [
+        {
+          "path": "dashboard/dashboard",
+          "style": {
+            "navigationStyle": "custom"
+          },
+          "meta": {
+            "ignoreAuth": true
+          }
+        },
+        {
+          "path": "splash/splash",
+          "style": {
+            "navigationStyle": "custom"
+          },
+          "meta": {
+            "ignoreAuth": true
+          }
+        }
+      ]
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTitleText": "uni-app",
+    "backgroundColor": "@bgColor",
+    "backgroundColorBottom": "@bgColorBottom",
+    "backgroundColorTop": "@bgColorTop",
+    "backgroundTextStyle": "@bgTxtStyle",
+    "navigationBarBackgroundColor": "#000000",
+    "navigationBarTextStyle": "@navTxtStyle"
+    // "navigationStyle": "custom"
+  },
+  "tabBar": {
+    "color": "#474747",
+    "selectedColor": "#9BC6FC",
+    "backgroundColor": "#FFFFFF",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "static/images/tabBar/home.png",
+        "selectedIconPath": "static/images/tabBar/selectedHome.png"
+      },
+      {
+        "pagePath": "pages/demo/index",
+        "text": "Demo",
+        "iconPath": "static/images/tabBar/demo.png",
+        "selectedIconPath": "static/images/tabBar/selectedDemo.png"
+      },
+      {
+        "pagePath": "pages/about/index",
+        "text": "关于",
+        "iconPath": "static/images/tabBar/about.png",
+        "selectedIconPath": "static/images/tabBar/selectedAbout.png"
+      }
+    ]
+  }
+}
