@@ -1,107 +1,128 @@
-<script setup lang="ts">
-  // import { reactive, ref } from 'vue';
-  import { onLoad } from '@dcloudio/uni-app';
-  // import { useAuthStore } from '@/stores/modules/auth';
-  import { Toast } from '@/utils/uniapi/prompt';
-  // import { useRouter } from '@/hooks/router';
-  import type { LoginModel } from '@/api/models/authModel';
-  import type { HttpResponse } from 'luch-request';
-  import to from 'await-to-js';
-  import toApi from '@/utils/api';
-  import { login } from '@/api/auth';
-
-  const redirect = ref<string | undefined>(undefined);
-  onLoad(query => {
-    redirect.value = query.redirect ? decodeURIComponent(query.redirect) : undefined;
-  });
-
-  const router = useRouter();
-
-  const form = reactive({
-    email: 'uni-app@test.com',
-    password: 'Vue3_Ts_Vite',
-  });
-  const authStore = useAuthStore();
-  const submit = async (e: any) => {
-    // const [err, data] = await to<HttpResponse<LoginModel>, ApiResult>(authStore.login(e.detail.value));
-    // const [err, data] = await to(authStore.login(e.detail.value));
-    // const [err, _] = await to(authStore.login(e.detail.value));
-    const [err, data] = await to<LoginModel, ApiResult>(authStore.login(e.detail.value));
-    // const [err, data] = await toApi(login(e.detail.value));
-
-    if (err) {
-      console.log(err);
-      Toast(err.msg);
-      return;
-    }
-
-    // console.log(data);
-    Toast('登录成功', { duration: 1500 });
-    setTimeout(() => {
-      if (redirect.value) {
-        router.go(redirect.value, { replace: true });
-        return;
-      }
-      router.pushTab('/pages/about/index');
-    }, 1500);
-  };
-</script>
-
 <template>
-  <view class="container">
-    <view class="title">登录</view>
-    <view class="form-wrap">
-      <form class="form" @submit="submit">
-        <label class="form-item">
-          <view class="form-label">邮箱:</view>
-          <view class="form-element"><input name="email" :value="form.email" /></view>
-        </label>
-        <label class="form-item">
-          <view class="form-label">密码:</view>
-          <view class="form-element"><input type="password" name="password" :value="form.password" /></view>
-        </label>
-        <button form-type="submit" class="submit-btn" hover-class="none">登录</button>
-      </form>
+  <view v-show="!hidePage" class="content">
+    <image class="logo" src="/static/images/logo.svg" />
+    <view class="text-area">
+      <text class="title"> 您好 - {{ vuex_user?.wechatName }} </text>
+    </view>
+
+    <form class="login-form u-m-40">
+      <view class="cu-form-group u-p-t-28 u-p-b-28">
+        <view class="title">用户名</view>
+        <input v-model="form.username" placeholder="请输入用户名" name="input" />
+        <text class="cuIcon-service" />
+      </view>
+      <view class="cu-form-group u-p-t-28 u-p-b-28">
+        <view class="title">密码</view>
+        <input v-model="form.password" type="password" placeholder="请输入密码" name="input" />
+      </view>
+    </form>
+
+    <view class="box u-m-t-40">
+      <view class="cu-bar btn-group">
+        <button class="cu-btn bg-gradual-red shadow-blur round lg" @click="submit">提交</button>
+      </view>
     </view>
   </view>
 </template>
 
+<script setup lang="ts">
+  import { reactive, ref } from 'vue';
+  import { onShow } from '@dcloudio/uni-app';
+
+  import useUserStore from '@/stores/modules/user';
+
+  const { vuex_user, initUserStore } = useUserStore();
+
+  interface loginAccout {
+    username: string;
+    password: string;
+    wxusername: string;
+  }
+
+  const form = reactive<loginAccout>({
+    username: '',
+    password: '',
+    wxusername: '',
+  });
+
+  const formReady = ref(false);
+  const submit = async () => {
+    if (form.username.length > 0 && form.password.length > 0) {
+      formReady.value = true;
+    }
+
+    if (!formReady.value) {
+      uni.showToast({
+        icon: 'none',
+        title: '请输入用户名或密码',
+      });
+      return;
+    }
+    if (uni.getUserProfile) {
+      uni.getUserProfile({
+        desc: '用以获取用户昵称、头像等',
+        success: function (userProfile) {
+          console.log(userProfile);
+          vuex_user.value.wechatName = userProfile.userInfo.nickName;
+          vuex_user.value.avatarUrl = userProfile.userInfo.avatarUrl;
+          login();
+        },
+        fail: function (e) {
+          console.log('uniLogin fail:', e);
+        },
+      });
+    }
+  };
+  function login() {}
+
+  /**
+   * ==================================================== init ====================================================
+   */
+  // 凡跳转登录页清空token，401跳转该页
+  onShow(() => {
+    initUserStore();
+  });
+</script>
+
 <style lang="scss" scoped>
-  .container {
-    margin: 0 auto;
-    width: 80%;
-    .title {
-      padding: 320rpx 0 32rpx 0;
-      text-align: center;
+  page {
+    background-color: #ffffff;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo {
+    height: 200rpx;
+    width: 200rpx;
+    margin-top: 100rpx;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 50rpx;
+  }
+
+  .text-area {
+    display: flex;
+    justify-content: center;
+  }
+
+  .title {
+    min-width: 146rpx;
+    font-size: 28rpx;
+    color: #606266;
+  }
+
+  .login-form {
+    .uni-input-placeholder {
+      color: #aaaaaa;
     }
-    .form-wrap {
-      padding: 20rpx 24rpx;
-      box-shadow: 16rpx 16rpx 30rpx #e5e7eb;
-      .form {
-        .form-item {
-          display: flex;
-          height: 88rpx;
-          border-bottom: 2rpx solid #dbeafe;
-          align-items: center;
-          .form-label {
-            min-width: 96rpx;
-          }
-          .form-element {
-            flex-grow: 1;
-          }
-        }
-        .submit-btn {
-          margin-top: 44rpx;
-          border: 4rpx solid #bfdbfe;
-          background-color: #60a5fa;
-          border-radius: 8rpx;
-          font-size: 28rpx;
-          color: #ffffff;
-          :hover {
-            background-color: #3b82f6;
-          }
-        }
-      }
-    }
+  }
+
+  .box {
+    width: 100%;
   }
 </style>

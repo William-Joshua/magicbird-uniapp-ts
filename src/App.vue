@@ -4,7 +4,7 @@
   import { removeInterceptor, setupInterceptors } from '@/utils/interceptors';
   import { useRouterStore } from '@/stores/modules/router';
   /* #ifdef MP-WEIXIN || MP-ALIPAY */
-  import { dynamicLoadFontFace } from '@/utils/fonts';
+  // import { dynamicLoadFontFace } from '@/utils/fonts';
   /* #endif */
 
   // Uno
@@ -54,8 +54,12 @@
   });
 </script>
 <style lang="scss">
+  @import './static/styles/index.scss';
+  /*每个页面公共css */
   page {
-    background-color: #f2f2f2;
+    font-family: -apple-system, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial,
+      sans-serif;
+    background-color: #f7f7f7;
   }
 </style>
 

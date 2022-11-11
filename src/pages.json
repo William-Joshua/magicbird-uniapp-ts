@@ -198,20 +198,26 @@
       {
         "pagePath": "pages/index/index",
         "text": "首页",
-        "iconPath": "static/images/tabBar/home.png",
-        "selectedIconPath": "static/images/tabBar/selectedHome.png"
+        "iconPath": "static/images/tabBar/layout_default_3x.png",
+        "selectedIconPath": "static/images/tabBar/layout_selected_3x.png"
       },
       {
         "pagePath": "pages/demo/index",
-        "text": "Demo",
-        "iconPath": "static/images/tabBar/demo.png",
-        "selectedIconPath": "static/images/tabBar/selectedDemo.png"
+        "text": "管理",
+        "iconPath": "static/images/tabBar/assembly_default_3x.png",
+        "selectedIconPath": "static/images/tabBar/assembly_selected_3x.png"
+      },
+      {
+        "pagePath": "pages/login/index",
+        "text": "详情",
+        "iconPath": "static/images/tabBar/mod_default_3x.png",
+        "selectedIconPath": "static/images/tabBar/mod_selected_3x.png"
       },
       {
         "pagePath": "pages/about/index",
-        "text": "关于",
-        "iconPath": "static/images/tabBar/about.png",
-        "selectedIconPath": "static/images/tabBar/selectedAbout.png"
+        "text": "我的",
+        "iconPath": "static/images/tabBar/my_default_3x.png",
+        "selectedIconPath": "static/images/tabBar/my_selected_3x.png"
       }
     ]
   }
