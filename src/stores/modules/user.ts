@@ -24,7 +24,7 @@ const initVal: UserState = {
     nickName: '游客',
     accountID: 'account',
     wechatName: '游客',
-    avatarUrl: '../static/images/avatar.png',
+    avatarUrl: '../../static/images/avatar.png',
   },
 };
 

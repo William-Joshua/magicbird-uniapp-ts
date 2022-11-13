@@ -1,74 +1,144 @@
-<script lang="ts" setup>
-  import { ref } from 'vue';
-  import { onShow } from '@dcloudio/uni-app';
-  import BasicButton from '@/components/BasicButton/index.vue';
-  import AppProvider from '@/components/AppProvider/inedx.vue';
-  import { useAuthStore } from '@/stores/modules/auth';
-  import { useRouter } from '@/hooks/router';
-
-  const authStore = useAuthStore();
-  const isLogin = ref(false);
-  const router = useRouter();
-  onShow(() => {
-    isLogin.value = authStore.isLogin;
-  });
-  const handleJump = (url: string) => {
-    router.push(url);
-  };
-
-  // 登出
-  const handleLoginOut = () => {
-    authStore.loginOut().then(() => {
-      isLogin.value = false;
-    });
-  };
-</script>
-
 <template>
-  <AppProvider>
-    <view class="container">
-      <view class="head-wrap">
-        <view class="avatar">
-          <image class="img" src="/static/images/avatar.png" />
-        </view>
-        <view class="desc">{{ isLogin ? '测试' : '未登入' }}</view>
+  <view class="fixed">
+    <cu-custom bgColor="bg-gradual-grey" :isBack="true">
+      <template v-slot:backText> 返回 </template>
+      <template v-slot:content> 我的 </template>
+    </cu-custom>
+  </view>
+  <view class="mainHeight u-m-l-20 u-m-r-20 bodyTop">
+    <view class="u-flex index-radius u-p-l-30 u-p-r-20 u-p-b-30 u-m-t-30 u-p-t-30">
+      <view class="u-m-r-20">
+        <navigator url="/pages/user/center">
+          <img class="user-box" style="width: 70px; height: 70px" :src="vuex_user?.avatarUrl" />
+        </navigator>
       </view>
-      <view class="cell"><BasicButton @click="handleJump('/pages/log/index?id=4345&title=log')">log</BasicButton></view>
-      <view class="cell" v-if="isLogin"><BasicButton @click="handleLoginOut">登出</BasicButton></view>
-      <view class="cell" v-else>
-        <BasicButton @click="handleJump('/pages/login/index')"> 登入 </BasicButton>
+      <view class="u-flex-1">
+        <view class="u-font-18 u-p-b-20">{{ vuex_user?.nickName }}</view>
+        <navigator url="/pages/user/center">
+          <view class="u-font-14 text-gray">微信号: {{ vuex_user?.wechatName }}</view>
+        </navigator>
+      </view>
+      <view class="u-m-l-10 u-p-10">
+        <text class="cuIcon-scan text-gray" />
+      </view>
+      <view class="u-m-l-10 u-p-10">
+        <navigator url="/pages/user/center">
+          <text class="cuIcon-right text-gray" />
+        </navigator>
       </view>
     </view>
-  </AppProvider>
+
+    <view class="u-m-t-20 index-radius">
+      <view class="cu-list menu">
+        <view class="cu-item arrow">
+          <view class="content">
+            <text class="cuIcon-apps text-black" />
+            <text class="text-black u-font-md">渔场管理</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="u-m-t-20 index-radius">
+      <view class="cu-list menu">
+        <view class="cu-item arrow">
+          <view class="content">
+            <text class="cuIcon-record text-black" />
+            <text class="text-black u-font-md">设备管理</text>
+          </view>
+        </view>
+        <view class="cu-item arrow">
+          <view class="content">
+            <text class="cuIcon-pay text-black" />
+            <text class="text-black u-font-md">网关管理</text>
+          </view>
+        </view>
+        <view class="cu-item arrow">
+          <view class="content">
+            <text class="cuIcon-location text-black" />
+            <text class="text-black u-font-md">位置管理</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="u-m-t-20 index-radius">
+      <view class="cu-list menu">
+        <view class="cu-item arrow">
+          <view class="content" @click="navtoSetting">
+            <text class="cuIcon-settings text-black" />
+            <text class="text-black u-font-md">设置</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
 </template>
 
-<style lang="scss" scoped>
-  .container {
-    padding: 96rpx 24rpx;
-    .head-wrap {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      .avatar {
-        height: 120rpx;
-        width: 120rpx;
-        border: 2rpx solid #d1d5db;
-        border-radius: 120rpx;
-        overflow: hidden;
-        padding: 6rpx;
-        .img {
-          height: 100%;
-          width: 100%;
-        }
-      }
-      .desc {
-        font-size: 28rpx;
-        line-height: 120rpx;
-      }
-    }
-    .cell {
-      margin-top: 60rpx;
-      text-align: center;
-    }
+<script setup lang="ts">
+  import { onShow } from '@dcloudio/uni-app';
+  import useUserStore from '@/stores/modules/user';
+
+  /**
+   * ==================================================== props/emits ====================================================
+   */
+
+  /**
+   * ==================================================== data ====================================================
+   */
+  const { vuex_user } = useUserStore();
+
+  /**
+   * ==================================================== computed ====================================================
+   */
+
+  /**
+   * ==================================================== methods ====================================================
+   */
+
+  const navtoSetting = () => {
+    uni.navigateTo({
+      url: './config/setting',
+    });
+  };
+  /**
+   * ==================================================== watch ====================================================
+   */
+
+  /**
+   * ==================================================== init ====================================================
+   */
+  onShow(() => {});
+</script>
+
+<style lang="scss">
+  .fixed {
+    height: 80px;
+    position: fixed;
+    z-index: 99;
+  }
+
+  .bodyTop {
+    margin-top: 80px;
+  }
+
+  .user-box {
+    background-color: #fff;
+  }
+
+  .mainHeight {
+    min-height: calc(100vh - 80px);
+  }
+
+  .index-radius {
+    background: #ffffff;
+    border-radius: 20rpx;
+    overflow: hidden;
+  }
+
+  .grid-text {
+    font-size: 26rpx;
+    margin-top: 20rpx;
+    color: #606266;
   }
 </style>

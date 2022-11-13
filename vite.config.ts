@@ -5,10 +5,10 @@ import { ConfigEnv, defineConfig, loadEnv } from 'vite';
 import { resolve } from 'path';
 import uni from '@dcloudio/vite-plugin-uni';
 import eslintPlugin from 'vite-plugin-eslint';
-import { viteMockServe } from 'vite-plugin-mock';
+// import { viteMockServe } from 'vite-plugin-mock';
 // import Components from 'unplugin-vue-components/vite';
 import AutoImport from 'unplugin-auto-import/vite';
-import UnoCSS from 'unocss/vite';
+// import UnoCSS from 'unocss/vite';
 
 // import WindiCSS from 'vite-plugin-windicss';
 // import MiniProgramTailwind from '@dcasia/mini-program-tailwind-webpack-plugin/rollup';
@@ -79,18 +79,18 @@ const viteConfig = defineConfig((mode: ConfigEnv) => {
     // },
     plugins: [
       uni(),
-      viteMockServe({
-        // 解析根目录下的mock文件夹
-        mockPath: 'mock',
-        localEnabled: localEnabled, // 开发打包开关
-        prodEnabled: prodEnabled, // 生产打包开关
-        supportTs: true, // 打开后，可以读取 ts 文件模块。 请注意，打开后将无法监视.js 文件。
-        watchFiles: true, // 监视文件更改
-      }),
+      // viteMockServe({
+      //   // 解析根目录下的mock文件夹
+      //   mockPath: 'mock',
+      //   localEnabled: localEnabled, // 开发打包开关
+      //   prodEnabled: prodEnabled, // 生产打包开关
+      //   supportTs: true, // 打开后，可以读取 ts 文件模块。 请注意，打开后将无法监视.js 文件。
+      //   watchFiles: true, // 监视文件更改
+      // }),
 
       // https://github.com/unocss/unocss
       // see unocss.config.ts for config
-      UnoCSS(),
+      // UnoCSS(),
 
       // 建议用 easycom
       // https://github.com/antfu/unplugin-vue-components

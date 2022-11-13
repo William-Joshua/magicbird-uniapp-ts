@@ -18,9 +18,9 @@
       }
     },
     {
-      "path": "pages/demo/index",
+      "path": "pages/alarm/index",
       "style": {
-        "navigationBarTitleText": "Demo"
+        "navigationBarTitleText": "警告"
       },
       "meta": {
         "ignoreAuth": true
@@ -29,7 +29,7 @@
     {
       "path": "pages/about/index",
       "style": {
-        "navigationBarTitleText": "关于"
+        "navigationBarTitleText": "我的"
       },
       "meta": {
         "ignoreAuth": true
@@ -39,6 +39,15 @@
       "path": "pages/login/index",
       "style": {
         "navigationBarTitleText": "登录"
+      },
+      "meta": {
+        "ignoreAuth": true
+      }
+    },
+    {
+      "path": "pages/device/index",
+      "style": {
+        "navigationBarTitleText": "站地"
       },
       "meta": {
         "ignoreAuth": true
@@ -62,43 +71,6 @@
   ],
   "subPackages": [
     {
-      "root": "pagesA",
-      "pages": [
-        {
-          "path": "list/test1/index",
-          "style": {
-            "navigationBarTitleText": "test1"
-          },
-          "meta": {
-            "ignoreAuth": true
-          }
-        },
-        {
-          "path": "list/test2/index",
-          "style": {
-            "navigationBarTitleText": "test2"
-          },
-          "meta": {
-            "ignoreAuth": true
-          }
-        }
-      ]
-    },
-    {
-      "root": "pagesB",
-      "pages": [
-        {
-          "path": "detail/index",
-          "style": {
-            "navigationBarTitleText": "Detail"
-          },
-          "meta": {
-            "ignoreAuth": true
-          }
-        }
-      ]
-    },
-    {
       "root": "demo/example",
       "pages": [
         {
@@ -120,75 +92,14 @@
           }
         }
       ]
-    },
-    {
-      "root": "pagesC",
-      "pages": [
-        {
-          "path": "index/index",
-          "style": {
-            "navigationStyle": "custom",
-            "navigationBarTitleText": "uni-app"
-          },
-          "meta": {
-            "ignoreAuth": true
-          }
-        },
-        {
-          "path": "collection/index",
-          "style": {
-            "navigationStyle": "custom",
-            "disableScroll": true
-          },
-          "meta": {
-            "ignoreAuth": true
-          }
-        },
-        {
-          "path": "user/index",
-          "style": {
-            "enablePullDownRefresh": true,
-            "navigationStyle": "custom"
-          },
-          "meta": {
-            "ignoreAuth": true
-          }
-        }
-      ]
-    },
-    {
-      "root": "pagesUno",
-      "pages": [
-        {
-          "path": "dashboard/dashboard",
-          "style": {
-            "navigationStyle": "custom"
-          },
-          "meta": {
-            "ignoreAuth": true
-          }
-        },
-        {
-          "path": "splash/splash",
-          "style": {
-            "navigationStyle": "custom"
-          },
-          "meta": {
-            "ignoreAuth": true
-          }
-        }
-      ]
     }
   ],
   "globalStyle": {
-    "navigationBarTitleText": "uni-app",
-    "backgroundColor": "@bgColor",
-    "backgroundColorBottom": "@bgColorBottom",
-    "backgroundColorTop": "@bgColorTop",
-    "backgroundTextStyle": "@bgTxtStyle",
-    "navigationBarBackgroundColor": "#000000",
-    "navigationBarTextStyle": "@navTxtStyle"
-    // "navigationStyle": "custom"
+   "navigationBarTitleText": "smart fisheries",
+       "navigationStyle": "custom",
+       "navigationBarTextStyle": "black",
+       "navigationBarBackgroundColor": "#FFFFFF",
+       "backgroundColor": "#e2e2e2"
   },
   "tabBar": {
     "color": "#474747",
@@ -202,14 +113,14 @@
         "selectedIconPath": "static/images/tabBar/layout_selected_3x.png"
       },
       {
-        "pagePath": "pages/demo/index",
-        "text": "管理",
+        "pagePath": "pages/device/index",
+        "text": "站点",
         "iconPath": "static/images/tabBar/assembly_default_3x.png",
         "selectedIconPath": "static/images/tabBar/assembly_selected_3x.png"
       },
       {
-        "pagePath": "pages/login/index",
-        "text": "详情",
+        "pagePath": "pages/alarm/index",
+        "text": "警告",
         "iconPath": "static/images/tabBar/mod_default_3x.png",
         "selectedIconPath": "static/images/tabBar/mod_selected_3x.png"
       },
