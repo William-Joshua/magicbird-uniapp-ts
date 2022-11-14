@@ -12,6 +12,12 @@ export interface ILoginParams {
   [keys: string]: any;
 }
 
+export interface LoginAccount {
+  username: string;
+  password: string;
+  wxusername: string;
+}
+
 export interface UserInfosStates {
   userInfos: ILogin;
   token: string;

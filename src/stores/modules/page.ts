@@ -1,6 +1,6 @@
 import { store } from '@/stores';
-import type { UNotifyOptions } from '@/components/UnoUI/UNotify/types';
-import type { UToastOptions } from '@/components/UnoUI/UToast/types';
+// import type { UNotifyOptions } from '@/components/UnoUI/UNotify/types';
+// import type { UToastOptions } from '@/components/UnoUI/UToast/types';
 
 interface PageConfig {
   showNavBar?: boolean;
@@ -14,8 +14,8 @@ export const usePageStore = defineStore('page', () => {
   const showBackAction = ref(false);
   const showCustomAction = ref(false);
   const pageTitle = ref('');
-  const notifyRef = ref<{ handleShowNotify: (options: UNotifyOptions) => {} }>();
-  const toastRef = ref<{ handleShowToast: (options: UToastOptions) => {} }>();
+  // const notifyRef = ref<{ handleShowNotify: (options: UNotifyOptions) => {} }>();
+  // const toastRef = ref<{ handleShowToast: (options: UToastOptions) => {} }>();
 
   const setPageConfig = (config: PageConfig) => {
     const {
@@ -31,17 +31,17 @@ export const usePageStore = defineStore('page', () => {
     pageTitle.value = _pageTitle;
   };
 
-  const showNotify = (options: UNotifyOptions) => notifyRef.value!.handleShowNotify(options);
+  // const showNotify = (options: UNotifyOptions) => notifyRef.value!.handleShowNotify(options);
 
-  const showToast = (options: UToastOptions) => toastRef.value!.handleShowToast(options);
+  // const showToast = (options: UToastOptions) => toastRef.value!.handleShowToast(options);
 
   const pageReset = () => {
     showNavBar.value = true;
     showBackAction.value = false;
     showCustomAction.value = false;
     pageTitle.value = '';
-    notifyRef.value = undefined;
-    toastRef.value = undefined;
+    // notifyRef.value = undefined;
+    // toastRef.value = undefined;
   };
 
   return {
@@ -50,10 +50,10 @@ export const usePageStore = defineStore('page', () => {
     pageTitle,
     showBackAction,
     showCustomAction,
-    notifyRef,
-    toastRef,
-    showNotify,
-    showToast,
+    // notifyRef,
+    // toastRef,
+    // showNotify,
+    // showToast,
     pageReset,
   };
 });

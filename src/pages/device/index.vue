@@ -37,6 +37,8 @@
 
 <script setup lang="ts">
   import { ref } from 'vue';
+  import { onShow } from '@dcloudio/uni-app';
+  import { ICheckPoint } from '@/api/models/quaryDevice';
 
   import DisplaySite from '@/pages/device/component/displaySite.vue';
 
@@ -48,6 +50,16 @@
   const hideDragerPage = () => {
     pageVisable.value = false;
   };
+
+  const initSiteDeviceDetails = () => {};
+
+  /**
+   * ==================================================== init ====================================================
+   */
+  // 凡跳转登录页清空token，401跳转该页
+  onShow(() => {
+    initSiteDeviceDetails();
+  });
 </script>
 
 <style>

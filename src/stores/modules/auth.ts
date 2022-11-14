@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { getCache, removeCache, setCache } from '@/utils/cache';
 import { TOKEN_KEY } from '@/enums/cacheEnum';
-import { login, logout, refreshToken } from '@/api/auth';
+import { login } from '@/api/auth';
 import { LoginParams, LoginModel } from '@/api/models/authModel';
 
 interface AuthState {
@@ -31,8 +31,12 @@ export const useAuthStore = defineStore({
     async login(params: LoginParams): Promise<LoginModel> {
       try {
         const { data } = await login(params);
-        this.setToken(data.token);
-        return Promise.resolve(data);
+
+        if (data.resultCode == 200) {
+          this.setToken(data.extend.access_token);
+          return Promise.resolve(data.extend);
+        }
+        return Promise.reject(data.resultMsg);
       } catch (err: any) {
         return Promise.reject(err);
       }
@@ -42,25 +46,25 @@ export const useAuthStore = defineStore({
      */
     async loginOut(): Promise<any> {
       try {
-        const res = await logout();
+        //const res = await logout();
         removeCache(TOKEN_KEY);
         this.setToken(undefined);
-        return Promise.resolve(res);
+        return Promise.resolve();
       } catch (err: any) {
         return Promise.reject(err);
       }
     },
-    /**
-     * @description 刷新token
-     */
-    async refreshToken(): Promise<LoginModel> {
-      try {
-        const { data } = await refreshToken();
-        this.setToken(data.token);
-        return Promise.resolve(data);
-      } catch (err: any) {
-        return Promise.reject(err);
-      }
-    },
+    // /**
+    //  * @description 刷新token
+    //  */
+    // async refreshToken(): Promise<LoginModel> {
+    //   try {
+    //     const { data } = await refreshToken();
+    //     this.setToken(data.token);
+    //     return Promise.resolve(data);
+    //   } catch (err: any) {
+    //     return Promise.reject(err);
+    //   }
+    // },
   },
 });

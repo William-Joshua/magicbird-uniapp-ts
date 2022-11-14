@@ -28,18 +28,14 @@
 <script setup lang="ts">
   import { reactive, ref } from 'vue';
   import { onShow } from '@dcloudio/uni-app';
+  import { LoginAccount } from '@/api/models/login';
+  import { useAuthStore } from '@/stores/modules/auth';
+  import type { LoginModel } from '@/api/models/authModel';
+  import to from 'await-to-js';
 
-  import useUserStore from '@/stores/modules/user';
+  const authStore = useAuthStore();
 
-  const { vuex_user, initUserStore } = useUserStore();
-
-  interface loginAccout {
-    username: string;
-    password: string;
-    wxusername: string;
-  }
-
-  const form = reactive<loginAccout>({
+  const form = reactive<LoginAccount>({
     username: '',
     password: '',
     wxusername: '',
@@ -58,30 +54,33 @@
       });
       return;
     }
+
     if (uni.getUserProfile) {
       uni.getUserProfile({
         desc: '用以获取用户昵称、头像等',
         success: function (userProfile) {
           console.log(userProfile);
-          vuex_user.value.wechatName = userProfile.userInfo.nickName;
-          vuex_user.value.avatarUrl = userProfile.userInfo.avatarUrl;
-          login();
         },
         fail: function (e) {
           console.log('uniLogin fail:', e);
+          formReady.value = false;
         },
       });
     }
+    if (formReady.value) {
+      let params = {
+        loginName: form.username,
+        password: form.password,
+      };
+      const [err, data] = await to<LoginModel, ApiResult>(authStore.login(params));
+    }
   };
-  function login() {}
 
   /**
    * ==================================================== init ====================================================
    */
   // 凡跳转登录页清空token，401跳转该页
-  onShow(() => {
-    initUserStore();
-  });
+  onShow(() => {});
 </script>
 
 <style lang="scss" scoped>
