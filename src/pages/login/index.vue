@@ -2,7 +2,7 @@
   <view v-show="!hidePage" class="content">
     <image class="logo" src="/static/images/logo.svg" />
     <view class="text-area">
-      <text class="title"> 您好 - {{ vuex_user?.wechatName }} </text>
+      <text class="title"> 您好 - {{ userStore?.wechatName }} </text>
     </view>
 
     <form class="login-form u-m-40">
@@ -30,10 +30,12 @@
   import { onShow } from '@dcloudio/uni-app';
   import { LoginAccount } from '@/api/models/login';
   import { useAuthStore } from '@/stores/modules/auth';
+  import { useUserStore } from '@/stores/modules/user';
   import type { LoginModel } from '@/api/models/authModel';
   import to from 'await-to-js';
 
   const authStore = useAuthStore();
+  const userStore = useUserStore();
 
   const form = reactive<LoginAccount>({
     username: '',
@@ -59,7 +61,11 @@
       uni.getUserProfile({
         desc: '用以获取用户昵称、头像等',
         success: function (userProfile) {
-          console.log(userProfile);
+          const parms = {
+            wechatName: userProfile.userInfo.nickName,
+            avatarUrl: userProfile.userInfo.avatarUrl,
+          };
+          userStore.setWechatDetail(parms);
         },
         fail: function (e) {
           console.log('uniLogin fail:', e);
@@ -68,11 +74,15 @@
       });
     }
     if (formReady.value) {
-      let params = {
-        loginName: form.username,
-        password: form.password,
-      };
-      const [err, data] = await to<LoginModel, ApiResult>(authStore.login(params));
+      if (userStore.uniGetOpenCode()) {
+        let params = {
+          loginName: form.username,
+          password: form.password,
+          opencode: userStore.openCode,
+        };
+        userStore.setAccount(form.username);
+        const [err, data] = await to<LoginModel, ApiResult>(authStore.login(params));
+      }
     }
   };
 

@@ -47,7 +47,7 @@
     {
       "path": "pages/device/index",
       "style": {
-        "navigationBarTitleText": "站地"
+        "navigationBarTitleText": "站点"
       },
       "meta": {
         "ignoreAuth": true

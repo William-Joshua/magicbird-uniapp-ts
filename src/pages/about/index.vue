@@ -13,16 +13,16 @@
         </navigator>
       </view>
       <view class="u-flex-1">
-        <view class="u-font-18 u-p-b-20">{{ vuex_user?.nickName }}</view>
+        <view class="u-font-18 u-p-b-20">{{ userStore?.userName }}</view>
         <navigator url="/pages/user/center">
-          <view class="u-font-14 text-gray">微信号: {{ vuex_user?.wechatName }}</view>
+          <view class="u-font-14 text-gray">微信号: {{ userStore?.wechatName }}</view>
         </navigator>
       </view>
       <view class="u-m-l-10 u-p-10">
         <text class="cuIcon-scan text-gray" />
       </view>
       <view class="u-m-l-10 u-p-10">
-        <navigator url="/pages/user/center">
+        <navigator url="/pages/login/index">
           <text class="cuIcon-right text-gray" />
         </navigator>
       </view>
@@ -77,7 +77,7 @@
 
 <script setup lang="ts">
   import { onShow } from '@dcloudio/uni-app';
-  import useUserStore from '@/stores/modules/user';
+  import { useUserStore } from '@/stores/modules/user';
 
   /**
    * ==================================================== props/emits ====================================================
@@ -86,7 +86,7 @@
   /**
    * ==================================================== data ====================================================
    */
-  const { vuex_user } = useUserStore();
+  const userStore = useUserStore();
 
   /**
    * ==================================================== computed ====================================================
