@@ -9,7 +9,7 @@
     <view class="u-flex index-radius u-p-l-30 u-p-r-20 u-p-b-30 u-m-t-30 u-p-t-30">
       <view class="u-m-r-20">
         <navigator url="/pages/user/center">
-          <img class="user-box" style="width: 70px; height: 70px" :src="vuex_user?.avatarUrl" />
+          <img class="user-box" style="width: 70px; height: 70px" :src="userStore?.avatarUrl" />
         </navigator>
       </view>
       <view class="u-flex-1">

@@ -30,6 +30,7 @@ export const useAuthStore = defineStore({
      */
     async login(params: LoginParams): Promise<LoginModel> {
       try {
+        console.log('login:', params);
         const { data } = await login(params);
 
         if (data.resultCode == 200) {

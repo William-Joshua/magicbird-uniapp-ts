@@ -43,19 +43,12 @@ export const useUserStore = defineStore({
     /**
      * @description 获取 OpenID
      */
-    uniGetOpenCode(): boolean {
-      try {
-        const opencode = uniGetCode();
-
+    uniGetOpenCode() {
+      uniGetCode((opencode: string) => {
         if (opencode.length > 0) {
           this.setOpenCode(opencode);
-          return true;
         }
-        return false;
-      } catch (err: any) {
-        console.log('Get Open Code Failed : ', err);
-        return false;
-      }
+      });
     },
   },
 });

@@ -35,7 +35,7 @@ request.interceptors.request.use(
         return Promise.reject(options);
       }
       options.header = assign(options.header, {
-        authorization: `Bearer ${authStore.getToken}`,
+        authorization: `bear ${authStore.getToken}`,
       });
     }
     return options;

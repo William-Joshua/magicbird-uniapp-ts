@@ -20,6 +20,7 @@ const LOGIN = '/userManger/login.do';
  * @param params
  */
 export function login(params: LoginParams) {
+  console.log('post:', params);
   return request.post<ApiResult<LoginModel>>(LOGIN, params, {
     custom: {
       auth: false,

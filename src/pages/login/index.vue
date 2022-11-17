@@ -1,6 +1,6 @@
 <template>
-  <view v-show="!hidePage" class="content">
-    <image class="logo" src="/static/images/logo.svg" />
+  <view class="content">
+    <img class="logo" :src="userStore?.avatarUrl" />
     <view class="text-area">
       <text class="title"> 您好 - {{ userStore?.wechatName }} </text>
     </view>
@@ -32,7 +32,6 @@
   import { useAuthStore } from '@/stores/modules/auth';
   import { useUserStore } from '@/stores/modules/user';
   import type { LoginModel } from '@/api/models/authModel';
-  import to from 'await-to-js';
 
   const authStore = useAuthStore();
   const userStore = useUserStore();
@@ -44,11 +43,11 @@
   });
 
   const formReady = ref(false);
-  const submit = async () => {
+  const submit = () => {
     if (form.username.length > 0 && form.password.length > 0) {
       formReady.value = true;
     }
-
+    console.log('form login');
     if (!formReady.value) {
       uni.showToast({
         icon: 'none',
@@ -56,33 +55,43 @@
       });
       return;
     }
-
     if (uni.getUserProfile) {
       uni.getUserProfile({
         desc: '用以获取用户昵称、头像等',
         success: function (userProfile) {
           const parms = {
             wechatName: userProfile.userInfo.nickName,
-            avatarUrl: userProfile.userInfo.avatarUrl,
           };
           userStore.setWechatDetail(parms);
         },
         fail: function (e) {
-          console.log('uniLogin fail:', e);
           formReady.value = false;
         },
       });
     }
+    console.log('formReady:', formReady);
     if (formReady.value) {
-      if (userStore.uniGetOpenCode()) {
-        let params = {
-          loginName: form.username,
-          password: form.password,
-          opencode: userStore.openCode,
-        };
-        userStore.setAccount(form.username);
-        const [err, data] = await to<LoginModel, ApiResult>(authStore.login(params));
-      }
+      console.log('userStore.uniGetOpenCode');
+      userStore.uniGetOpenCode();
+      let params = {
+        loginName: form.username,
+        password: form.password,
+        openCode: userStore.openCode,
+      };
+      console.log('uuserStore', params);
+      userStore.setAccount(form.username);
+      authStore
+        .login(params)
+        .then((loginuser: LoginModel) => {
+          console.log('succss', loginuser);
+        })
+        .catch(() => {
+          uni.showToast({
+            icon: 'error',
+            title: '登录失败，请重试',
+          });
+          return;
+        });
     }
   };
 
