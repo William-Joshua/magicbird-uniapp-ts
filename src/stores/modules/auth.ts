@@ -28,19 +28,19 @@ export const useAuthStore = defineStore({
     /**
      * @description 登录
      */
-    async login(params: LoginParams): Promise<LoginModel> {
-      try {
-        console.log('login:', params);
-        const { data } = await login(params);
-
-        if (data.resultCode == 200) {
-          this.setToken(data.extend.access_token);
-          return Promise.resolve(data.extend);
-        }
-        return Promise.reject(data.resultMsg);
-      } catch (err: any) {
-        return Promise.reject(err);
-      }
+    async login(params: LoginParams) {
+      return login(params)
+        .then((data: any) => {
+          if (data.resultCode == 200) {
+            this.setToken(data.extend.access_token);
+            return data.extend;
+          } else {
+            return null;
+          }
+        })
+        .catch((err: any) => {
+          return null;
+        });
     },
     /**
      * @description 登出

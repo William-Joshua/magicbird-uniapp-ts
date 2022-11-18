@@ -1,18 +1,20 @@
 import { request } from '@/utils/http';
 import { LoginParams, LoginModel } from '@/api/models/authModel';
-import { ApiResult } from '@/api/models/apiResult';
 
 const LOGIN = '/userManger/login.do';
-// /**
-//  * 登录
-//  * @param params
-//  */
+/**
+ * 登录
+ * @param params
+ */
 // export function login(params: LoginParams) {
-//   return request.post<LoginModel>(LOGIN, params, {
+//   console.log('post:', params);
+//   let reponse = request.post<LoginModel>(LOGIN, params, {
 //     custom: {
 //       auth: false,
 //     },
 //   });
+//   console.log('reponse:', reponse);
+//   return reponse;
 // }
 
 /**
@@ -20,7 +22,6 @@ const LOGIN = '/userManger/login.do';
  * @param params
  */
 export function login(params: LoginParams) {
-  console.log('post:', params);
   return request.post<ApiResult<LoginModel>>(LOGIN, params, {
     custom: {
       auth: false,

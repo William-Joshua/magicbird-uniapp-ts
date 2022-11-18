@@ -49,8 +49,8 @@ request.interceptors.request.use(
 request.interceptors.response.use(
   async response => {
     const { data: resData } = response;
-    const { code, message } = resData;
-    if (code === ResultEnum.SUCCESS) {
+    const { resultCode } = resData;
+    if (resultCode === ResultEnum.SUCCESS) {
       return resData as any;
     }
     // Toast(message);

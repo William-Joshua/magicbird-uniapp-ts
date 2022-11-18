@@ -1,6 +1,5 @@
 declare interface ApiResult<T = any> {
-  code: number;
-  success: boolean;
-  data?: T;
-  msg: string;
+  resultCode: number;
+  resultMsg: string;
+  extend: T;
 }

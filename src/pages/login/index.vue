@@ -32,7 +32,9 @@
   import { useAuthStore } from '@/stores/modules/auth';
   import { useUserStore } from '@/stores/modules/user';
   import type { LoginModel } from '@/api/models/authModel';
-
+  import { useRouter } from '@/hooks/router';
+  import { HOME_PAGE } from '@/enums/routerEnum';
+  const router = useRouter();
   const authStore = useAuthStore();
   const userStore = useUserStore();
 
@@ -69,21 +71,33 @@
         },
       });
     }
-    console.log('formReady:', formReady);
     if (formReady.value) {
-      console.log('userStore.uniGetOpenCode');
-      userStore.uniGetOpenCode();
+      userStore.uniGetOpenCode(bindUserLogin, () => {
+        formReady.value = false;
+        uni.showToast({
+          icon: 'none',
+          title: '获取微信Js-Code 异常，无法登录',
+        });
+        return;
+      });
+    }
+  };
+
+  const bindUserLogin = () => {
+    if (formReady.value) {
       let params = {
         loginName: form.username,
         password: form.password,
         openCode: userStore.openCode,
       };
-      console.log('uuserStore', params);
       userStore.setAccount(form.username);
       authStore
         .login(params)
         .then((loginuser: LoginModel) => {
-          console.log('succss', loginuser);
+          authStore.setToken(loginuser.access_token);
+          userStore.setAccount(loginuser.userName);
+          userStore.setuserName(loginuser.name);
+          router.push(HOME_PAGE);
         })
         .catch(() => {
           uni.showToast({

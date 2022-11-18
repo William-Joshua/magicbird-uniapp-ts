@@ -35,7 +35,6 @@ export const useUserStore = defineStore({
     },
     setWechatDetail(wechatParam: any) {
       this.wechatName = wechatParam.wechatName;
-      this.avatarUrl = wechatParam.avatarUrl;
     },
     setuserName(userName: string) {
       this.userName = userName;
@@ -43,12 +42,10 @@ export const useUserStore = defineStore({
     /**
      * @description 获取 OpenID
      */
-    uniGetOpenCode() {
-      uniGetCode((opencode: string) => {
-        if (opencode.length > 0) {
-          this.setOpenCode(opencode);
-        }
-      });
+    uniGetOpenCode(successFunc: Function, failFunc: Function) {
+      uniGetCode((openCode: string) => {
+        this.setOpenCode(openCode), successFunc();
+      }, failFunc);
     },
   },
 });
