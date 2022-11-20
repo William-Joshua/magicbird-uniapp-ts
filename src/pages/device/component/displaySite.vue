@@ -1,8 +1,8 @@
 <template>
-  <view class="padding-top padding-lr" v-for="(item, index) in checkPointState.DeviceStatusDetails" :key="index">
+  <view class="padding-top padding-lr" v-for="(item, index) in checkPointState.deviceData" :key="index">
     <view class="cu-bar solid-bottom bg-white">
       <view class="action">
-        <text class="cuIcon-circlefill text-gray"></text> 设 备 {{ item.id }}:
+        <text class="cuIcon-circlefill text-gray"></text> 设 备 {{ item.deviceId }}:
         <text class="margin-sm text-bold">{{ item.deviceName }}</text>
       </view>
     </view>
@@ -16,7 +16,7 @@
               </view>
               <view class="cu-form-group text-black">
                 <view class="title">设备编号</view>
-                <input placeholder="设备编号" name="input" v-model="item.deviceLabel" />
+                <input placeholder="设备编号" name="input" v-model="item.deviceId" />
               </view>
               <view class="cu-form-group text-black">
                 <view class="title">设备名</view>
@@ -24,19 +24,31 @@
               </view>
               <view class="cu-form-group text-black">
                 <view class="title">设备地址</view>
-                <input placeholder="设备地址" name="input" v-model="item.address" />
+                <input placeholder="设备地址" name="input" v-model="item.deviceAddr" />
                 <text class="cuIcon-locationfill text-orange"></text>
+              </view>
+              <view class="cu-form-group text-black">
+                <view class="title">设备类型</view>
+                <input placeholder="设备类型" name="input" v-model="item.deviceTypeName" />
+                <text class="cuIcon-info text-orange"></text>
+              </view>
+              <view class="cu-form-group text-black">
+                <view class="title">设备码</view>
+                <input placeholder="设备码" name="input" v-model="item.deviceCode" />
+                <text class="cuIcon-barcode text-orange"></text>
               </view>
             </view>
 
-            <view>
+            <view v-if="true">
               <view class="cu-bar bg-white solid-bottom margin-top-xs">
-                <view class="action"> <text class="cuIcon-title text-orange"></text> 实时状态 </view>
+                <view class="action"> <text class="cuIcon-title text-orange"></text> 实时监控 </view>
+                <DisplayMonitor ref="displayMonitorRef"></DisplayMonitor>
               </view>
             </view>
-            <view>
-              <view class="cu-bar bg-white solid-bottom margin-top-xs" v-if="item.showChart">
+            <view v-if="true">
+              <view class="cu-bar bg-white solid-bottom margin-top-xs">
                 <view class="action"> <text class="cuIcon-title text-orange"></text> 图表预览 </view>
+                <DisplayChart ref="displayChartRef"></DisplayChart>
               </view>
             </view>
           </view>
@@ -48,31 +60,42 @@
 
 <script setup lang="ts">
   import { ref, reactive } from 'vue';
-
+  import { ICheckPoint, IDeviceItem } from '@/api/models/quaryDevice';
   import DisplayChart from '@/pages/device/component/displayChart.vue';
-  interface DeviceStatus {
-    id?: number;
-    deviceName: string;
-    deviceLabel: string;
-    address: string;
-    showChart: boolean;
-  }
+  import DisplayMonitor from '@/pages/device/component/displayMonitor.vue';
 
-  interface CheckPoint {
-    DeviceStatusDetails: Array<DeviceStatus>;
-  }
-
-  const checkPointState = reactive<CheckPoint>({
-    DeviceStatusDetails: [
-      {
-        id: 1,
-        deviceName: 'xxx',
-        deviceLabel: 'xxx',
-        address: 'xxx',
-        showChart: false,
-      },
-    ],
+  const checkPointState: ICheckPoint = reactive({
+    placeID: NaN,
+    placeAddr: '',
+    deviceData: [],
+    siteAbbr: '',
   });
+
+  const displayChartRef = ref();
+  const displayMonitorRef = ref();
+  const showSiteForm = (sitedetail: ICheckPoint) => {
+    initSiteDetail(sitedetail);
+  };
+
+  defineExpose({
+    showSiteForm,
+  });
+
+  const initSiteDetail = (siteItem: ICheckPoint) => {
+    checkPointState.placeID = siteItem.placeID;
+    checkPointState.placeAddr = siteItem.placeAddr;
+    checkPointState.deviceData = siteItem.deviceData;
+    checkPointState.siteAbbr = siteItem.siteAbbr;
+
+    checkPointState.deviceData.forEach((item: IDeviceItem) => {
+      if (true) {
+        displayChartRef.value.loadRealChart(item);
+      }
+      if (true) {
+        displayMonitorRef.value.loadRealMonitor(item);
+      }
+    });
+  };
 </script>
 
 <style lang="scss">

@@ -10,9 +10,10 @@ export interface IDeviceItem {
   deviceType: number; // 设备类型，1：视频监控类 2：水质曲线类 3：设备控制类
   deviceTypeID: number;
   deviceTypeName: string;
-  devcieCode: string;
+  deviceCode: string;
   deviceId: number;
-  version: undefined;
+  deviceName: string;
+  version?: undefined;
   createTime: string;
-  marker: undefined;
+  marker?: undefined;
 }

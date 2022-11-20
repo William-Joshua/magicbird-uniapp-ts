@@ -1,12 +1,11 @@
 <template>
-  <view class="bg-gradual-blue">
+  <view>
     <view class="fixed">
       <cu-custom :is-back="true" bgColor="bg-gradual-blue">
         <template v-slot:backText> 返回 </template>
         <template v-slot:content> 设备详情 </template>
       </cu-custom>
     </view>
-
     <scroll-view scroll-y class="DrawerPage" :class="pageVisable ? 'show' : ''">
       <view class="padding margin text-left">
         <view class="cu-btn bg-gradual-pink lg block shadow radius" @click="showDragerPage">
@@ -14,7 +13,7 @@
         </view>
       </view>
       <view class="cu-list cu-menu margin-xs shadow-lg">
-        <DisplaySite></DisplaySite>
+        <DisplaySite :ref="displaySiteRef"></DisplaySite>
       </view>
     </scroll-view>
 
@@ -24,10 +23,10 @@
     <scroll-view scroll-y class="DrawerWindow" :class="pageVisable ? 'show' : ''">
       <view class="cu-btn bg-gradual-pink shadow"> <text class="cuIcon-list margin-sm"></text> 站 点 列 表 </view>
       <view class="cu-list card-menu margin-xs shadow-lg">
-        <view class="cu-item arrow" v-for="(item, index) in 20" :key="index">
-          <view class="content">
+        <view class="cu-item arrow" v-for="(item, index) in state.data" :key="index">
+          <view class="content" @click="showSiteDetail(item)">
             <text class="cuIcon-github text-grey"></text>
-            <text class="text-grey">{{ index + 1 }}</text>
+            <text class="text-grey">{{ item.siteAbbr }}</text>
           </view>
         </view>
       </view>
@@ -36,22 +35,48 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue';
+  import { ref, reactive } from 'vue';
   import { onShow } from '@dcloudio/uni-app';
   import { ICheckPoint } from '@/api/models/quaryDevice';
-
+  import { queryDevice } from '@/api/deviceApi';
   import DisplaySite from '@/pages/device/component/displaySite.vue';
+  import { useUserStore } from '@/stores/modules/user';
 
+  interface siteData {
+    data: Array<ICheckPoint>;
+  }
+  const userStore = useUserStore();
   const pageVisable = ref(false);
   const showDragerPage = () => {
     pageVisable.value = true;
   };
 
+  const state: siteData = reactive({
+    data: [],
+  });
+
+  const displaySiteRef = ref();
+
   const hideDragerPage = () => {
     pageVisable.value = false;
   };
 
-  const initSiteDeviceDetails = () => {};
+  const showSiteDetail = (item: ICheckPoint) => {
+    displaySiteRef.value.showSiteForm(item);
+  };
+
+  const initSiteDeviceDetails = () => {
+    const params = {
+      loginName: userStore.accountID,
+    };
+    queryDevice(params)
+      .then((reponse: any) => {
+        if (reponse.resultCode == 200) {
+          state.data = reponse.extend.data;
+        }
+      })
+      .catch(() => {});
+  };
 
   /**
    * ==================================================== init ====================================================
