@@ -86,6 +86,11 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
   import { onShow } from '@dcloudio/uni-app';
+  import { useAuthStore } from '@/stores/modules/auth';
+  import { useRouter } from '@/hooks/router';
+
+  const router = useRouter();
+  const authStore = useAuthStore();
 
   const filterVisable = ref(false);
   const timeFilter = ref('weekly');
@@ -105,6 +110,13 @@
   const alarmTypeSwitch = (typeSwitch: any) => {
     showLowAlarm.value = typeSwitch.detail.value;
   };
+
+  onShow(() => {
+    if (authStore.token == null) {
+      console.log('notlog');
+      router.push('/pages/login/notLog');
+    }
+  });
 </script>
 
 <style lang="scss" scoped></style>

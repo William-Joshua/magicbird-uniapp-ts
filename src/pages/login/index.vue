@@ -33,8 +33,9 @@
   import { useUserStore } from '@/stores/modules/user';
   import type { LoginModel } from '@/api/models/authModel';
   import { useRouter } from '@/hooks/router';
-  import { HOME_PAGE } from '@/enums/routerEnum';
+
   const router = useRouter();
+
   const authStore = useAuthStore();
   const userStore = useUserStore();
 
@@ -97,7 +98,7 @@
           authStore.setToken(loginuser.access_token);
           userStore.setAccount(loginuser.userName);
           userStore.setuserName(loginuser.name);
-          router.push(HOME_PAGE);
+          router.push('/pages/about/index');
         })
         .catch(() => {
           uni.showToast({

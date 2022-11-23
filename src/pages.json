@@ -45,6 +45,15 @@
       }
     },
     {
+      "path": "pages/login/notLog",
+      "style": {
+        "navigationBarTitleText": "未登录"
+      },
+      "meta": {
+        "ignoreAuth": true
+      }
+    },
+    {
       "path": "pages/device/index",
       "style": {
         "navigationBarTitleText": "站点"

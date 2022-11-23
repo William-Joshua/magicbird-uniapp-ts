@@ -41,6 +41,12 @@
   import { queryDevice } from '@/api/deviceApi';
   import DisplaySite from '@/pages/device/component/displaySite.vue';
   import { useUserStore } from '@/stores/modules/user';
+  import { useAuthStore } from '@/stores/modules/auth';
+  import { useRouter } from '@/hooks/router';
+
+  const router = useRouter();
+
+  const authStore = useAuthStore();
 
   interface siteData {
     data: Array<ICheckPoint>;
@@ -83,7 +89,13 @@
    */
   // 凡跳转登录页清空token，401跳转该页
   onShow(() => {
-    initSiteDeviceDetails();
+    console.log('notlog', authStore.token);
+    if (authStore.token == null) {
+      console.log('notlog');
+      router.push('/pages/login/notLog');
+    } else {
+      initSiteDeviceDetails();
+    }
   });
 </script>
 
