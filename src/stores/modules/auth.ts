@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { getCache, removeCache, setCache } from '@/utils/cache';
 import { TOKEN_KEY } from '@/enums/cacheEnum';
 import { login } from '@/api/auth';
-import { LoginParams, LoginModel } from '@/api/models/authModel';
+import { LoginParams } from '@/api/models/authModel';
 
 interface AuthState {
   token?: string;

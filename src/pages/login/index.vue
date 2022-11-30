@@ -98,7 +98,7 @@
           authStore.setToken(loginuser.access_token);
           userStore.setAccount(loginuser.userName);
           userStore.setuserName(loginuser.name);
-          router.push('/pages/about/index');
+          router.pushTab('/pages/about/index');
         })
         .catch(() => {
           uni.showToast({

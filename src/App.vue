@@ -40,7 +40,14 @@
     colorScheme.addEventListener('change', (e: MediaQueryListEvent) => (darkMode.value = e.matches));
     // The data is obtained from iPhone13 miniprogram but statusBarHeight, top and bottom values are subtracted from the statusBarHeight value
     statusBarHeight.value = 0;
-    menuButtonBounding.value = { width: 87, height: 32, left: 281, top: 4, right: 368, bottom: 36 };
+    menuButtonBounding.value = {
+      width: 87,
+      height: 32,
+      left: 281,
+      top: 4,
+      right: 368,
+      bottom: 36,
+    };
     // #endif
   });
 
@@ -55,6 +62,7 @@
 </script>
 <style lang="scss">
   @import './static/styles/index.scss';
+
   /*每个页面公共css */
   page {
     font-family: -apple-system, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial,

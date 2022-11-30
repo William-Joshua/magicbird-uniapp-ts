@@ -1,6 +1,6 @@
 <template>
   <view class="fixed">
-    <cu-custom bgColor="bg-gradual-grey" :isBack="true">
+    <cu-custom :is-back="true" bgColor="bg-gradual-blue">
       <template v-slot:backText> 返回 </template>
       <template v-slot:content> 我的 </template>
     </cu-custom>
@@ -8,23 +8,14 @@
   <view class="mainHeight u-m-l-20 u-m-r-20 bodyTop">
     <view class="u-flex index-radius u-p-l-30 u-p-r-20 u-p-b-30 u-m-t-30 u-p-t-30">
       <view class="u-m-r-20">
-        <navigator url="/pages/user/center">
-          <img class="user-box" style="width: 70px; height: 70px" :src="userStore?.avatarUrl" />
-        </navigator>
+        <img class="user-box" style="width: 70px; height: 70px" :src="userStore?.avatarUrl" />
       </view>
       <view class="u-flex-1">
         <view class="u-font-18 u-p-b-20">{{ userStore?.userName }}</view>
-        <navigator url="/pages/user/center">
-          <view class="u-font-14 text-gray">微信号: {{ userStore?.wechatName }}</view>
-        </navigator>
+        <view class="u-font-14 text-gray">微信号: {{ userStore?.wechatName }}</view>
       </view>
       <view class="u-m-l-10 u-p-10">
         <text class="cuIcon-scan text-gray" />
-      </view>
-      <view class="u-m-l-10 u-p-10">
-        <navigator url="/pages/login/index">
-          <text class="cuIcon-right text-gray" />
-        </navigator>
       </view>
     </view>
 
@@ -64,6 +55,15 @@
 
     <view class="u-m-t-20 index-radius">
       <view class="cu-list menu">
+        <view class="cu-item">
+          <navigator url="/pages/login/index">
+            <view class="content">
+              <text class="cuIcon-people text-black" />
+              <text class="text-black u-font-md">切换账号</text>
+            </view>
+          </navigator>
+        </view>
+
         <view class="cu-item arrow">
           <view class="content" @click="navtoSetting">
             <text class="cuIcon-settings text-black" />

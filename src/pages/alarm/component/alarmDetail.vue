@@ -10,7 +10,7 @@
           <form>
             <view class="content">
               <view>
-                <view class="cu-bar bg-white solid-bottom text-gray">
+                <view class="cu-bar solid-bottom text-gray">
                   <view class="action"> <text class="cuIcon-title text-orange"></text> 警告信息 </view>
                 </view>
                 <view class="cu-form-group text-black">
@@ -60,6 +60,6 @@
   </view>
 </template>
 
-<script></script>
+<script lang="ts" setup></script>
 
-<style></style>
+<style lang="scss" scoped></style>

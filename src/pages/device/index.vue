@@ -1,37 +1,35 @@
 <template>
-  <view>
-    <view class="fixed">
-      <cu-custom :is-back="true" bgColor="bg-gradual-blue">
-        <template v-slot:backText> 返回 </template>
-        <template v-slot:content> 设备详情 </template>
-      </cu-custom>
-    </view>
-    <scroll-view scroll-y class="DrawerPage" :class="pageVisable ? 'show' : ''">
-      <view class="padding margin text-left">
-        <view class="cu-btn bg-gradual-pink lg block shadow radius" @click="showDragerPage">
-          <text class="cuIcon-list margin-sm"></text> 切 换 站 点
-        </view>
-      </view>
-      <view class="cu-list cu-menu margin-xs shadow-lg">
-        <DisplaySite :ref="displaySiteRef"></DisplaySite>
-      </view>
-    </scroll-view>
-
-    <view class="DrawerClose" :class="pageVisable ? 'show' : ''" @tap="hideDragerPage">
-      <text class="cuIcon-pullright"></text>
-    </view>
-    <scroll-view scroll-y class="DrawerWindow" :class="pageVisable ? 'show' : ''">
-      <view class="cu-btn bg-gradual-pink shadow"> <text class="cuIcon-list margin-sm"></text> 站 点 列 表 </view>
-      <view class="cu-list card-menu margin-xs shadow-lg">
-        <view class="cu-item arrow" v-for="(item, index) in state.data" :key="index">
-          <view class="content" @click="showSiteDetail(item)">
-            <text class="cuIcon-github text-grey"></text>
-            <text class="text-grey">{{ item.siteAbbr }}</text>
-          </view>
-        </view>
-      </view>
-    </scroll-view>
+  <view class="fixed">
+    <cu-custom :is-back="true" bgColor="bg-gradual-green">
+      <template v-slot:backText> 返回 </template>
+      <template v-slot:content> 设备详情 </template>
+    </cu-custom>
   </view>
+  <scroll-view scroll-y class="DrawerPage bodyTop" :class="pageVisable ? 'show' : ''">
+    <view class="padding margin text-left">
+      <view class="cu-btn bg-gradual-blue lg block shadow radius" @click="showDragerPage">
+        <text class="cuIcon-list margin-sm"></text> 切 换 站 点
+      </view>
+    </view>
+    <view class="cu-list cu-menu margin-xs shadow-lg">
+      <DisplaySite :ref="displaySiteRef"></DisplaySite>
+    </view>
+  </scroll-view>
+
+  <view class="DrawerClose" :class="pageVisable ? 'show' : ''" @tap="hideDragerPage">
+    <text class="cuIcon-pullright"></text>
+  </view>
+  <scroll-view scroll-y class="DrawerWindow bodyTop" :class="pageVisable ? 'show' : ''">
+    <view class="cu-btn bg-gradual-pink shadow"> <text class="cuIcon-list margin-sm"></text> 站 点 列 表 </view>
+    <view class="cu-list card-menu margin-xs shadow-lg">
+      <view class="cu-item arrow" v-for="(item, index) in state.data" :key="index">
+        <view class="content" @click="showSiteDetail(item)">
+          <text class="cuIcon-github text-grey"></text>
+          <text class="text-grey">{{ item.siteAbbr }}</text>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
 </template>
 
 <script setup lang="ts">
@@ -51,6 +49,7 @@
   interface siteData {
     data: Array<ICheckPoint>;
   }
+
   const userStore = useUserStore();
   const pageVisable = ref(false);
   const showDragerPage = () => {
@@ -99,11 +98,15 @@
   });
 </script>
 
-<style>
+<style lang="scss" scoped>
   page {
     background-image: var(--gradualBlue);
     width: 100vw;
     overflow: hidden;
+  }
+
+  .bodyTop {
+    margin-top: 80px;
   }
 
   .DrawerPage {
