@@ -15,9 +15,9 @@
     <view class="cu-modal" :class="filterVisable ? 'show' : ''" @tap="hideFilterPage">
       <AlarmFilterDialog ref="alarmFilterRef" :switchAlarm="switchAlarmFilter" />
     </view>
-    <view class="cu-timeline" v-for="alarmDate in state.alarmDetails" :key="alarmDate.alarmDate">
+    <view class="cu-timeline" v-for="alarmDate in state.alarmDetails" :key="alarmDate.alarmGroupID">
       <view class="cu-time" v-for="alarm in alarmDate.alarmItems" :key="alarm.id"
-        >{{ alarmDate.Date }}
+        >{{ alarmDate.alarmDate }}
         <view v-if="alarm.alarmLevel === 1" class="cu-item text-blue">
           <view class="cotent bg-green shadow-blur">
             <text>{{ alarm.alarmTime }}</text> {{ alarm.description }}
@@ -136,18 +136,18 @@
 
     queryAlarm(params)
       .then(
-        function (response) {
+        function (response: any) {
           if (response.resultCode == 200) {
             state.data = response.extend.data;
 
             convertAlarmData();
           } else {
-            ElMessage.error(response.resultMsg);
+            console.log('警告获取失败!');
           }
         }.bind(this),
       )
-      .catch(function (error) {
-        ElMessage.error(error);
+      .catch(function (error: any) {
+        console.log(error);
       });
   };
 
@@ -155,36 +155,30 @@
     state.data.forEach(function (alarmItem) {
       let alarmItemDate = new Date(alarmItem.alarmTime);
       let deviceAlarmItem = state.alarmDetails.find(item => item.alarmDate == alarmItemDate);
+      let groupID = 0;
+
+      const newAlarmItem = {
+        id: alarmItem.id,
+        alarmTime: alarmItemDate.getHours() + ':' + alarmItemDate.getMinutes() + ':' + alarmItemDate.getSeconds(),
+        siteName: alarmItem.siteName,
+        deviceName: alarmItem.deviceName,
+        fieldName: alarmItem.fieldName,
+        val: alarmItem.val,
+        alarmLevel: alarmItem.alarmLevel,
+        alarmLevelName: alarmItem.alarmLevelName,
+        description: '<' + alarmItem.deviceName + '>' + '当前值为 : ' + alarmItem.val + ';请及时处理',
+      };
 
       if (deviceAlarmItem != null) {
-        const newAlarmItem = {
-          id: alarmItem.id,
-          alarmTime: alarmItemDate.getHours() + ':' + alarmItemDate.getMinutes() + ':' + alarmItemDate.getSeconds(),
-          siteName: alarmItem.siteName,
-          deviceName: alarmItem.deviceName,
-          fieldName: alarmItem.fieldName,
-          val: alarmItem.val,
-          alarmLevel: alarmItem.alarmLevel,
-          alarmLevelName: alarmItem.alarmLevelName,
-          description: '<' + alarmItem.deviceName + '>' + '当前值为 : ' + alarmItem.val + ';请及时处理',
-        };
         deviceAlarmItem.alarmItems.push(newAlarmItem);
       } else {
+        groupID = groupID + 1;
         const newDeviceAlarm: IDeviceAlarm = {
-          alarmData: alarmItemDate,
-          alarmItems: [
-            {
-              alarmTime: alarmItemDate.getHours() + ':' + alarmItemDate.getMinutes() + ':' + alarmItemDate.getSeconds(),
-              siteName: alarmItem.siteName,
-              deviceName: alarmItem.deviceName,
-              fieldName: alarmItem.fieldName,
-              val: alarmItem.val,
-              alarmLevel: alarmItem.alarmLevel,
-              alarmLevelName: alarmItem.alarmLevelName,
-              description: '<' + alarmItem.deviceName + '>' + '当前值为 : ' + alarmItem.val + ';请及时处理',
-            },
-          ],
+          alarmGroupID: groupID,
+          alarmDate: alarmItemDate,
+          alarmItems: [],
         };
+        newDeviceAlarm.alarmItems.push(newAlarmItem);
         state.alarmDetails.push(newDeviceAlarm);
       }
     });

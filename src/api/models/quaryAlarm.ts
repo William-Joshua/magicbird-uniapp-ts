@@ -1,4 +1,5 @@
 export interface IDeviceAlarm {
+  alarmGroupID: number;
   alarmDate: Date;
   alarmItems: Array<IAlarmItem>;
 }
