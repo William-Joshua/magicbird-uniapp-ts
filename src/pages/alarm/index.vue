@@ -79,6 +79,7 @@
     initAlarmTimeLine();
   };
   const initAlarmTimeLine = () => {
+    alarmFilterRef.value.initAlarmFilter();
     const params = {
       startTime: '',
       endTime: '',
@@ -86,7 +87,8 @@
     };
     if (alarmStore.timePeriodFilter == AlarmPeriodFilterEnum.WEEKLY) {
       let lastWeekDate = new Date();
-      lastWeekDate.setDate(lastWeekDate.getTime() - 7 * 24 * 60 * 60 * 1000);
+      lastWeekDate.setDate(lastWeekDate.getDate() - 7);
+
       params.startTime =
         lastWeekDate.getFullYear() + '-' + (lastWeekDate.getMonth() + 1) + '-' + lastWeekDate.getDate() + ' 00:00:00';
       let todayDate = new Date();
@@ -104,7 +106,7 @@
         todayDate.getSeconds();
     } else if (alarmStore.timePeriodFilter == AlarmPeriodFilterEnum.MONTHLY) {
       let lastMonthDate = new Date();
-      lastMonthDate.setDate(lastMonthDate.getTime() - 30 * 24 * 60 * 60 * 1000);
+      lastMonthDate.setDate(lastMonthDate.getDate() - 30);
       params.startTime =
         lastMonthDate.getFullYear() +
         '-' +
@@ -126,6 +128,7 @@
         ':' +
         todayDate.getSeconds();
     }
+    console.log('AlarmTypeFilterEnum', alarmStore.alarmTypeSwitch);
     if (alarmStore.alarmTypeSwitch == AlarmTypeFilterEnum.ONLY_SERIOUS) {
       params.isDeal = 3;
     } else if (alarmStore.alarmTypeSwitch == AlarmTypeFilterEnum.EXCLUDE_LOW) {
@@ -134,6 +137,7 @@
       params.isDeal = 21;
     }
 
+    console.log('Alarm :', params);
     queryAlarm(params)
       .then(
         function (response: any) {

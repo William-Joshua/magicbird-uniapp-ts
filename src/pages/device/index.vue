@@ -88,9 +88,7 @@
    */
   // 凡跳转登录页清空token，401跳转该页
   onShow(() => {
-    console.log('notlog', authStore.token);
     if (authStore.token == null) {
-      console.log('notlog');
       router.push('/pages/login/notLog');
     } else {
       initSiteDeviceDetails();
