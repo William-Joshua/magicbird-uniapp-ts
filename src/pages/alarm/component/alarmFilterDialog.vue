@@ -1,53 +1,63 @@
 <template>
   <view class="cu-dialog">
-    <radio-group class="block bg-blue" @change="singleChooseChange">
-      <view class="cu-list menu text-left">
-        <view class="cu-item">
-          <view class="content">
-            <text class="text-black">上一周</text>
-          </view>
-          <view class="action">
-            <radio class="round" value="WEEKLY" :class="alarmStore.timePeriodFilter == 0 ? 'checked' : ''" />
-          </view>
-        </view>
-        <view class="cu-item">
-          <view class="content">
-            <text class="text-black">上一月</text>
-          </view>
-          <view class="action">
-            <radio class="round" value="MONTHLY" :class="alarmStore.timePeriodFilter == 1 ? 'checked' : ''" />
-          </view>
-        </view>
+    <view>
+      <view class="cu-bar">
+        <view class="action"> <text class="cuIcon-title text-orange"></text> 时间过滤 </view>
       </view>
-    </radio-group>
-    <radio-group class="block bg-red" @change="alarmTypeSwitch">
-      <view class="cu-list menu text-left">
-        <view class="cu-item">
-          <view class="content">
-            <text class="text-black">全部警告</text>
+      <radio-group class="block" @change="singleChooseChange">
+        <view class="cu-list menu text-left">
+          <view class="cu-item">
+            <view class="content">
+              <text class="text-black">上一周</text>
+            </view>
+            <view class="action">
+              <radio class="round" value="WEEKLY" :class="alarmStore.timePeriodFilter == 0 ? 'checked' : ''" />
+            </view>
           </view>
-          <view class="action">
-            <radio class="round" value="ALL" :class="alarmStore.alarmTypeSwitch == 0 ? 'checked' : ''" />
-          </view>
-        </view>
-        <view class="cu-item">
-          <view class="content">
-            <text class="text-black">排除轻微警告</text>
-          </view>
-          <view class="action">
-            <radio class="round" value="EXCLUDE_LOW" :class="alarmStore.alarmTypeSwitch == 1 ? 'checked' : ''" />
-          </view>
-        </view>
-        <view class="cu-item">
-          <view class="content">
-            <text class="text-black">仅显示严重</text>
-          </view>
-          <view class="action">
-            <radio class="round" value="ONLY_SERIOUS" :class="alarmStore.alarmTypeSwitch == 2 ? 'checked' : ''" />
+          <view class="cu-item">
+            <view class="content">
+              <text class="text-black">上一月</text>
+            </view>
+            <view class="action">
+              <radio class="round" value="MONTHLY" :class="alarmStore.timePeriodFilter == 1 ? 'checked' : ''" />
+            </view>
           </view>
         </view>
+      </radio-group>
+    </view>
+    <view>
+      <view class="cu-bar">
+        <view class="action"> <text class="cuIcon-title text-orange"></text> 类型过滤 </view>
       </view>
-    </radio-group>
+      <radio-group class="block" @change="alarmTypeSwitch">
+        <view class="cu-list menu text-left">
+          <view class="cu-item">
+            <view class="content">
+              <text class="text-black">全部警告</text>
+            </view>
+            <view class="action">
+              <radio class="round" value="ALL" :class="alarmStore.alarmTypeSwitch == 0 ? 'checked' : ''" />
+            </view>
+          </view>
+          <view class="cu-item">
+            <view class="content">
+              <text class="text-black">排除轻微警告</text>
+            </view>
+            <view class="action">
+              <radio class="round" value="EXCLUDE_LOW" :class="alarmStore.alarmTypeSwitch == 1 ? 'checked' : ''" />
+            </view>
+          </view>
+          <view class="cu-item">
+            <view class="content">
+              <text class="text-black">仅显示严重</text>
+            </view>
+            <view class="action">
+              <radio class="round" value="ONLY_SERIOUS" :class="alarmStore.alarmTypeSwitch == 2 ? 'checked' : ''" />
+            </view>
+          </view>
+        </view>
+      </radio-group>
+    </view>
   </view>
 </template>
 
