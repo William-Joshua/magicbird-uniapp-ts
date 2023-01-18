@@ -78,31 +78,6 @@
       }
     }
   ],
-  "subPackages": [
-    {
-      "root": "demo/example",
-      "pages": [
-        {
-          "path": "fontAwesomeIcon/index",
-          "style": {
-            "navigationBarTitleText": "FontAwesomeIcon-Demo"
-          },
-          "meta": {
-            "ignoreAuth": true
-          }
-        },
-        {
-          "path": "fontAwesomeIcon/check",
-          "style": {
-            "navigationBarTitleText": "FontAwesomeIcon-Check"
-          },
-          "meta": {
-            "ignoreAuth": true
-          }
-        }
-      ]
-    }
-  ],
   "globalStyle": {
    "navigationBarTitleText": "smart fisheries",
        "navigationStyle": "custom",

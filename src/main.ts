@@ -3,7 +3,7 @@ import App from './App.vue';
 import { setupStore } from '@/stores';
 import '@/components/FontAwesomeIcon/index.scss';
 import i18n from '@/language/index';
-import cuCustom from '@/colorui/components/cu-custom.vue';
+import cuCustom from '@/static/styles/colorui/components/cu-custom.vue';
 
 import '@/assets/style/main.scss';
 
